@@ -46,22 +46,23 @@ router.get('/api/dishes/:name', async (req, res) => {
 
 
 router.put('/api/dishes/:id', async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const newData = req.body;
 
     try {
-        const newData  = await Dish.findByIdAndUpdate(id, newData, {
+        const newDish = await Dish.findByIdAndUpdate(id, newData, {
             new: true,
-            runValidators: true
+            runValidators: true,
         });
 
-        if (!newData) {
-            return res.status(404).json({message: 'No dish found.'});
+        if (!newDish) {
+            return res.status(404).json({ message: 'No dish found.' });
         }
-        res.json(newData);
 
+        res.json(newDish);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        console.error('Error updating dish:', error); 
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
 
