@@ -7,6 +7,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
+app.use(express.static('public'));
 app.use('/', dishRoutes);
 
 const PORT = process.env.PORT;
